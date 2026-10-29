@@ -1,0 +1,131 @@
+$color-menu: #064935;
+$color-acento: #90E989;
+$color-fondo: #eef3f4;
+$color-texto: #1d2b2f;
+
+$duracion: 0.3s;
+$funcion: ease-in-out;
+$retraso: 0.1s;
+
+@mixin prefijos($propiedad, $valor) {
+  -webkit-#{$propiedad}: $valor;
+  -moz-#{$propiedad}: $valor;
+  #{$propiedad}: $valor;
+}
+
+@mixin keyframes($nombre) {
+  @-webkit-keyframes #{$nombre} {
+    @content;
+  }
+  @-moz-keyframes #{$nombre} {
+    @content;
+  }
+  @keyframes #{$nombre} {
+    @content;
+  }
+}
+
+@include keyframes(aparecer) {
+  from {
+    opacity: 0;
+    @include prefijos(transform, translateY(30px));
+  }
+  to {
+    opacity: 1;
+    @include prefijos(transform, translateY(0));
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  line-height: 1.6;
+  color: $color-texto;
+  background: $color-fondo;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: $color-menu;
+
+  @supports (position: sticky) {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  &__marca {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  a {
+    margin-left: 1.5rem;
+    padding-bottom: 0.2rem;
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color $duracion $funcion $retraso,
+      border-color $duracion $funcion $retraso;
+
+    &:hover {
+      color: $color-acento;
+      border-color: $color-acento;
+    }
+  }
+}
+
+.portada {
+  padding: 5rem 2rem;
+
+  h1 {
+    max-width: 16ch;
+    margin: 0 0 1rem;
+    font-size: 2.75rem;
+    line-height: 1.15;
+  }
+}
+.servicios {
+  padding: 2rem;
+
+  &__rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+}
+.tarjeta {
+  padding: 1.5rem;
+  background: #ffffff;
+  border-top: 4px solid $color-acento;
+  border-radius: 4px;
+  @include prefijos(animation, aparecer 0.7s ease-out both);
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      @include prefijos(animation-delay, ($i - 1) * 0.15s);
+    }
+  }
+}
+
+.contactoT{
+  margin-top: 4rem;
+  padding: 3rem 2rem 6rem;
+  text-align: center;
+  color: #ffffff;
+  background-color: #064935
+}
+
+
+
+
+
+
